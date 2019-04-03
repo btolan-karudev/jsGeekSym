@@ -6,6 +6,13 @@
             this.helper = new Helper($wrapper);
 
 
+
+            // console.log(
+            //     'foo'.__proto__,
+            //     [].__proto__,
+            //     (new Date()).__proto__
+            // );
+
             this.$wrapper.find('.js-delete-rep-log').on(
                 'click',
                 this.handRepLogDelete.bind(this)
@@ -19,6 +26,12 @@
             console.log('instance of helper->', this.helper, Object.keys(this.helper));
             console.log('Helper Obj->', Helper, Object.keys(Helper));
             console.log('thistotlw', this.helper.calculateTotalWeight());
+
+            // var playObject = {
+            //     lift: "stuff"
+            // };
+            // playObject.__proto__.cat = 'meow';
+            // console.log(playObject.lift, playObject.cat);
         },
 
         updateTotalWeightLifted: function () {

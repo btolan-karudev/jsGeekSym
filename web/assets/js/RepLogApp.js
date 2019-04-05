@@ -64,13 +64,19 @@
             e.preventDefault();
 
             var $form = $(e.currentTarget);
+            var $tbody = this.$wrapper.find('tbody');
+            var self = this;
             $.ajax({
                 url: $form.attr('action'),
                 method: 'POST',
                 data: $form.serialize(),
                 success: function (data) {
+                    $tbody.append(data);
+                    self.updateTotalWeightLifted();
+                },
+                error: function (jqXHR) {
                     $form.closest('.js-new-rep-log-wrapper')
-                        .html(data);
+                        .html(jqXHR.responseText);
                 }
             })
         }

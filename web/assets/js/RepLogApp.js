@@ -1,44 +1,34 @@
 (function (window, $) {
     'use strict';
-    window.RepLogApp = {
-        initialize: function ($wrapper) {
-            this.$wrapper = $wrapper;
-            this.helper = new Helper($wrapper);
+    window.RepLogApp = function ($wrapper) {
+        this.$wrapper = $wrapper;
+        this.helper = new Helper($wrapper);
 
+        this.$wrapper.find('.js-delete-rep-log').on(
+            'click',
+            this.handRepLogDelete.bind(this)
+        );
 
+        this.$wrapper.find('tbody tr').on(
+            'click',
+            this.handleRowClick.bind(this)
+        );
 
-            // console.log(
-            //     'foo'.__proto__,
-            //     [].__proto__,
-            //     (new Date()).__proto__
-            // );
+        this.$wrapper.find('.js-new-rep-log-form').on(
+            'submit',
+            this.handleNewFormSubmit.bind(this)
+        );
 
-            this.$wrapper.find('.js-delete-rep-log').on(
-                'click',
-                this.handRepLogDelete.bind(this)
-            );
+    };
 
-            this.$wrapper.find('tbody tr').on(
-                'click',
-                this.handleRowClick.bind(this)
-            );
+    $.extend(window.RepLogApp.prototype, {
+        updateTotalWeightLifted:
 
-            console.log('instance of helper->', this.helper, Object.keys(this.helper));
-            console.log('Helper Obj->', Helper, Object.keys(Helper));
-            console.log('thistotlw', this.helper.calculateTotalWeight());
-
-            // var playObject = {
-            //     lift: "stuff"
-            // };
-            // playObject.__proto__.cat = 'meow';
-            // console.log(playObject.lift, playObject.cat);
-        },
-
-        updateTotalWeightLifted: function () {
-            this.$wrapper.find('.js-total-weight').html(
-                this.helper.calculateTotalWeight()
-            );
-        },
+            function () {
+                this.$wrapper.find('.js-total-weight').html(
+                    this.helper.calculateTotalWeight()
+                );
+            },
 
         handRepLogDelete: function (e) {
             e.preventDefault();
@@ -69,21 +59,42 @@
         handleRowClick: function () {
             console.log('row cliked');
         },
-    };
+
+        handleNewFormSubmit: function (e) {
+            e.preventDefault();
+
+            var $form = $(e.currentTarget);
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'POST',
+                data: $form.serialize(),
+                success: function (data) {
+                    $form.closest('.js-new-rep-log-wrapper')
+                        .html(data);
+                }
+            })
+        }
+
+    });
 
     /**
      * A "private" object
      */
-    var Helper  = function ($wrapper) {
+    var Helper = function ($wrapper) {
         this.$wrapper = $wrapper;
     };
-    Helper.prototype.calculateTotalWeight = function () {
-        var totalWeight = 0;
-        this.$wrapper.find('tbody tr').each(function () {
-            totalWeight += $(this).data('weight');
-        });
 
-        return totalWeight;
-    };
+    $.extend(Helper.prototype, {
+        calculateTotalWeight: function () {
+            var totalWeight = 0;
+            this.$wrapper.find('tbody tr').each(function () {
+                totalWeight += $(this).data('weight');
+            });
 
-})(window, jQuery);
+            return totalWeight;
+        }
+    });
+
+
+})
+(window, jQuery);

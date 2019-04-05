@@ -40,6 +40,12 @@ class LiftController extends BaseController
             $totalWeight += $repLog->getTotalWeightLifted();
         }
 
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('lift/_form.html.twig', [
+                'form' => $form->createView()
+            ]);
+        }
+
         return $this->render('lift/index.html.twig', array(
             'form' => $form->createView(),
             'repLogs' => $repLogs,

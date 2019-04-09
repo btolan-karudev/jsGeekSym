@@ -1,8 +1,10 @@
-(function (window, $) {
+(function (window, $, Routing) {
     'use strict';
     window.RepLogApp = function ($wrapper) {
         this.$wrapper = $wrapper;
         this.helper = new Helper($wrapper);
+
+        this.loadRepLogs();
 
         this.$wrapper.on(
             'click',
@@ -27,6 +29,18 @@
     $.extend(window.RepLogApp.prototype, {
         _selectors: {
             newRepForm: '.js-new-rep-log-form'
+        },
+
+        loadRepLogs: function () {
+            var self = this;
+            $.ajax({
+                url: Routing.generate('rep_log_list'),
+                success: function (data) {
+                    $.each(data.items, function (key, repLog) {
+                        self._addRow(repLog);
+                    });
+                }
+            });
         },
 
         updateTotalWeightLifted:
@@ -72,7 +86,7 @@
             var $form = $(e.currentTarget);
             var formData = {};
             $.each($form.serializeArray(), function (key, fieldData) {
-               formData[fieldData.name] =  fieldData.value;
+                formData[fieldData.name] = fieldData.value;
             });
             var self = this;
             $.ajax({
@@ -115,14 +129,14 @@
             $form.find('.js-field-error').remove();
             $form.find('.form-group').removeClass('has-error');
         },
-        
+
         _clearForm: function () {
             this._removeFormErrors();
 
             var $form = this.$wrapper.find(this._selectors.newRepForm);
             $form[0].reset();
         },
-        
+
         _addRow: function (repLog) {
             var tplText = $('#js-rep-log-row-template').html();
             var tpl = _.template(tplText);
@@ -155,4 +169,4 @@
 
 
 })
-(window, jQuery);
+(window, jQuery, Routing);

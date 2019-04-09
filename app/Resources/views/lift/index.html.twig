@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                 {% for repLog in repLogs %}
-                   {{ include('lift/_repRow.html.twig') }}
+                    {{ include('lift/_repRow.html.twig') }}
                 {% else %}
                     <tr>
                         <td colspan="4">Get liftin'!</td>
@@ -61,12 +61,29 @@
     <script src="{{ asset('assets/js/RepLogApp.js') }}"></script>
 
     <script>
-        // console.log(window === this);
+
         $(document).ready(function () {
             var $wrapper = $('.js-rep-log-table');
 
             var repLogApp = new RepLogApp($wrapper);
         });
+    </script>
+
+    <script type="text/template" id="js-rep-log-row-template">
+        <tr data-weight="<%= totalWeightLifted %>">
+            <td><%= itemLabel %></td>
+            <td><%= reps %></td>
+            <td><%= totalWeightLifted %></td>
+            <td>
+                &nbsp;<a href="#"
+                         class="js-delete-rep-log"
+                         data-url="<%= links._self %>"
+                >
+                    <span class="fa fa-trash"></span>
+                    Delete
+                </a>
+            </td>
+        </tr>
     </script>
 
 {% endblock %}

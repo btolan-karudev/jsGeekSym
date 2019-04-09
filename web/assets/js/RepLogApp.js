@@ -101,6 +101,14 @@
                     var errorData = JSON.parse(jqXHR.responseText);
                     self._mapErrorsToForm(errorData.errors);
                 }
+            }).then(function (data) {
+                console.log('I am succesful!');
+                console.log(data);
+
+                return data;
+            }).then(function (data) {
+                console.log('another handler');
+                console.log(data);
             });
         },
 

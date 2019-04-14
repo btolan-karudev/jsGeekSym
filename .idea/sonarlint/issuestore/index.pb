@@ -17,3 +17,13 @@ N
 app/config/parameters.yml.dist,0\7\07824c9aab75bf52de2f00afa8cdc7ac77ef121e
 I
 app/config/parameters.yml,0\9\097603ca450965955300d2bae7a6e7405b274a21
+X
+(app/Resources/views/lift/_form.html.twig,a\d\adea496451a637f10737a6812756339fd78ba1bd
+[
++src/AppBundle/Controller/BaseController.php,a\7\a74448b150df6da139066f01a0f4edefa6a7115e
+F
+app/config/routing.yml,3\f\3f7873bbc4b169ac0acf645797538748dfb611f3
+[
++src/AppBundle/Controller/LiftController.php,4\c\4c3e6129178a2ef26f07559fba80580f5edb81e3
+A
+app/AppKernel.php,3\2\32f52550acb5074923c0619d4deb7829721136e0

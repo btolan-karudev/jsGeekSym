@@ -1,4 +1,4 @@
-(function (window, $, Routing) {
+(function (window, $, Routing, swal) {
     'use strict';
     window.RepLogApp = function ($wrapper) {
         this.$wrapper = $wrapper;
@@ -51,8 +51,23 @@
 
         handRepLogDelete: function (e) {
             e.preventDefault();
-
             var $link = $(e.currentTarget);
+            var self = this;
+            swal({
+                title: 'Delete this log',
+                html: 'What? Did you not actually lift this?',
+                showCancelButton: true,
+            }).then(
+                function () {
+                    self._deleteRepLog($link);
+                },
+                // hadling the promise rejection
+                function () {
+                        console.log('Canceld by user')
+                }
+            )
+        },
+        _deleteRepLog: function ($link) {
             $link.addClass('text-danger');
             $link.find('.fa')
                 .removeClass('fa-trash')
@@ -183,4 +198,4 @@
 
 
 })
-(window, jQuery, Routing);
+(window, jQuery, Routing, swal);

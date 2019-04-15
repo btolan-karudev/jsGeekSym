@@ -55,5 +55,6 @@
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="underscore" level="application" />
     <orderEntry type="library" name="es6-promise.auto" level="application" />
+    <orderEntry type="library" name="sweetalert2" level="application" />
   </component>
 </module>

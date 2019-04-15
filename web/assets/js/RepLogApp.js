@@ -57,15 +57,13 @@
                 title: 'Delete this log',
                 html: 'What? Did you not actually lift this?',
                 showCancelButton: true,
-            }).then(
-                function () {
-                    self._deleteRepLog($link);
-                },
-                // hadling the promise rejection
-                function () {
-                        console.log('Canceld by user')
+                showLoaderOnConfirm: true,
+                preConfirm: function () {
+                   return self._deleteRepLog($link);
                 }
-            )
+            }).catch(function (arg) {
+                console.log('canceld', arg);
+            });
         },
         _deleteRepLog: function ($link) {
             $link.addClass('text-danger');
@@ -78,7 +76,7 @@
             var $row = $link.closest('tr');
             var self = this;
 
-            $.ajax({
+            return $.ajax({
                 url: deleteUrl,
                 method: 'DELETE',
 

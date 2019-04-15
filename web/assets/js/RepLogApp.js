@@ -94,10 +94,13 @@
                 self._clearForm();
                 self._addRow(data);
             }).catch(function (jqXHR) {
-                console.log('failed');
-                console.log(jqXHR.responseText);
+                if (typeof jqXHR.responseText === 'undefined') {
+                   throw jqXHR;
+                }
                 var errorData = JSON.parse(jqXHR.responseText);
                 self._mapErrorsToForm(errorData.errors);
+            }).catch(function (e) {
+                console.log(e);
             });
         },
 

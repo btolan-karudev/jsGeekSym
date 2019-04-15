@@ -94,22 +94,28 @@
                 self._clearForm();
                 self._addRow(data);
             }).catch(function (jqXHR) {
-                if (typeof jqXHR.responseText === 'undefined') {
-                   throw jqXHR;
-                }
                 var errorData = JSON.parse(jqXHR.responseText);
                 self._mapErrorsToForm(errorData.errors);
-            }).catch(function (e) {
-                console.log(e);
             });
         },
 
         _saveRepLog: function (data) {
-            return $.ajax({
-                url: Routing.generate('rep_log_new'),
-                method: 'POST',
-                data: JSON.stringify(data),
-            })
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: Routing.generate('rep_log_new'),
+                    method: 'POST',
+                    data: JSON.stringify(data),
+                }).then(function (data, textStatus, jqXHR) {
+                    $.ajax({
+                        url: jqXHR.getResponseHeader('Location')
+                    }).then(function (data) {
+                        // we are finaly done
+                        resolve(data);
+                    });
+                }).catch(function (jqXHR) {
+                    reject(jqXHR);
+                });
+            });
         },
 
         _mapErrorsToForm: function (errorData) {

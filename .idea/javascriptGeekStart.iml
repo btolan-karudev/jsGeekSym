@@ -54,5 +54,6 @@
     <orderEntry type="library" name="jquery-3.1.1" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="underscore" level="application" />
+    <orderEntry type="library" name="es6-promise.auto" level="application" />
   </component>
 </module>
